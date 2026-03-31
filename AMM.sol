@@ -61,7 +61,7 @@ contract AMM is AccessControl{
 		if (sellToken == tokenA) {
 			uint256 newqtyA = qtyA + effectiveSell;
 			uint256 newqtyB = invariant / newQtyA;
-			swapAmt = qtyB - newQtyB;
+			swapAmt = qtyB - newqtyB;
 			emit Swap(tokenA, tokenB, sellAmount, swapAmt);
 
 		} else {
