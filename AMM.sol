@@ -62,12 +62,17 @@ contract AMM is AccessControl{
 			uint256 newqtyA = qtyA + effectiveSell;
 			uint256 newqtyB = invariant / newqtyA;
 			swapAmt = qtyB - newqtyB;
+			require( ERC20(tokenA).transferFrom(msg.sender, address(this), sellAmount), "tokenA transferFrom failed");
+			require( ERC20(tokenB).transferFrom(msg.sender, address(this), sellAmount), "tokenB transferFrom failed");
 			emit Swap(tokenA, tokenB, sellAmount, swapAmt);
 
 		} else {
 		uint256 newQtyB = qtyB + effectiveSell;
 		uint256 newQtyA = invariant / newQtyB;
 		swapAmt = qtyA - newQtyA;
+		require( ERC20(tokenB).transferFrom(msg.sender, address(this), sellAmount),"tokenB transferFrom failed"
+        );
+        require( ERC20(tokenA).transfer(msg.sender, swapAmt), "tokenA transfer failed");
 		emit Swap(tokenB, tokenA, sellAmount, swapAmt);
 
 		}
